@@ -1331,17 +1331,19 @@ var OAuthService = (function (_super) {
             else {
                 state = nonce;
             }
-            if (!_this.requestAccessToken && !_this.oidc) {
-                throw new Error('Either requestAccessToken or oidc or both must be true');
-            }
-            if (_this.oidc && _this.requestAccessToken) {
-                _this.responseType = 'id_token token';
-            }
-            else if (_this.oidc && !_this.requestAccessToken) {
-                _this.responseType = 'id_token';
-            }
-            else {
-                _this.responseType = 'token';
+            if (!_this.responseType) {
+                if (!_this.requestAccessToken && !_this.oidc) {
+                    throw new Error('Either requestAccessToken or oidc or both must be true');
+                }
+                if (_this.oidc && _this.requestAccessToken) {
+                    _this.responseType = 'id_token token';
+                }
+                else if (_this.oidc && !_this.requestAccessToken) {
+                    _this.responseType = 'id_token';
+                }
+                else {
+                    _this.responseType = 'token';
+                }
             }
             var /** @type {?} */ seperationChar = (that.loginUrl.indexOf('?') > -1) ? '&' : '?';
             var /** @type {?} */ scope = that.scope;
@@ -1352,7 +1354,7 @@ var OAuthService = (function (_super) {
             var /** @type {?} */ url = that.loginUrl
                 + seperationChar
                 + 'response_type='
-                + encodeURIComponent('code')
+                + encodeURIComponent(that.responseType)
                 + '&client_id='
                 + encodeURIComponent(that.clientId)
                 + '&state='
