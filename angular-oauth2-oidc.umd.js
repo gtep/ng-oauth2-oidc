@@ -1349,8 +1349,7 @@ var OAuthService = (function (_super) {
             var /** @type {?} */ scope = that.scope;
             if (_this.oidc && !scope.match(/(^|\s)openid($|\s)/)) {
                 scope = 'openid ' + scope;
-            }
-            console.log(that.responseType);
+            }            
             var /** @type {?} */ url = that.loginUrl
                 + seperationChar
                 + 'response_type='
